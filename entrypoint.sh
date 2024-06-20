@@ -27,7 +27,8 @@ if [ -n "$INPUT_MYSQL_DATABASE" ]; then
   docker_run+=( -e MYSQL_DATABASE="$INPUT_MYSQL_DATABASE" )
 fi
 
-docker_run+=( --health-cmd='healthcheck.sh --connect --innodb_initialized' --health-start-interval=20s --health-start-interval=3s )
+HEALTHCHECK_INTERVAL=3
+docker_run+=( --health-cmd='healthcheck.sh --connect --innodb_initialized' --health-start-period=5s --health-start-interval="$HEALTHCHECK_INTERVAL"s )
 docker_run+=( -d -p "$INPUT_HOST_PORT:$INPUT_CONTAINER_PORT" "$INPUT_MARIADB_IMAGE:$INPUT_MARIADB_VERSION" --port="$INPUT_CONTAINER_PORT" )
 docker_run+=( --character-set-server="$INPUT_CHARACTER_SET_SERVER" --collation-server="$INPUT_COLLATION_SERVER" )
 
@@ -55,7 +56,7 @@ until (( count == 0 )); do
         break
     else
         echo "Container $CONTAINER_NAME is still starting (current status: $HEALTH)"
-        sleep 1
+        sleep "$HEALTHCHECK_INTERVAL"
     fi
     count=$(( count - 1 ))
 done
