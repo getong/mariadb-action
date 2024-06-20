@@ -33,10 +33,16 @@ docker_run+=( --character-set-server="$INPUT_CHARACTER_SET_SERVER" --collation-s
 
 CONTAINER_NAME=$( "${docker_run[@]}" )
 
+if [ -z "$CONTAINER_NAME" ]; then
+	echo "No container started"
+	exit 1
+fi
+
 echo "Waiting for container $CONTAINER_NAME to start..."
 
 # Loop until the container is healthy
-while true; do
+count=30
+until (( count == 0 )); do
     # Get the health status of the container
     HEALTH=$(docker inspect --format='{{.State.Health.Status}}' "$CONTAINER_NAME" 2>/dev/null)
 
@@ -51,6 +57,11 @@ while true; do
         echo "Container $CONTAINER_NAME is still starting (current status: $HEALTH)"
         sleep 1
     fi
+    count=$(( count - 1 ))
 done
 
-echo "Container $CONTAINER_NAME is now started and healthy."
+if [ "$HEALTH" = "healthy" ]; then
+    echo "Container $CONTAINER_NAME is now started and healthy."
+else
+    echo "Container fails to start in time"
+fi
