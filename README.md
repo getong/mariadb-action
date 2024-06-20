@@ -15,6 +15,7 @@ steps:
     character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
     collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
     mariadb version: '10.4.10' # Optional, default value is "latest". The version of the MariaDB
+    mariadb image: 'mariadb' # Optional, default value is "mariadb" (the Docker Official Image of MariaDB). The container image used.
     mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
     mysql root password: ${{ secrets.RootPassword }} # Required if "mysql user" is empty, default is empty. The root superuser password
     mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too

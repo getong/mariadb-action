@@ -25,6 +25,10 @@ inputs:
     description: 'Version of MariaDB to use'
     required: false
     default: 'latest'
+  mariadb image:
+    description: 'Container image to use'
+    required: false
+    default: 'mariadb'
   mysql root password:
     description: 'MYSQL_ROOT_PASSWORD - root superuser password'
     required: false

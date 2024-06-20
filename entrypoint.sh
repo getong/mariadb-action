@@ -28,7 +28,7 @@ if [ -n "$INPUT_MYSQL_DATABASE" ]; then
 fi
 
 docker_run="$docker_run --health-cmd='healthcheck.sh --connect --innodb_initialized'"
-docker_run="$docker_run -d -p $INPUT_HOST_PORT:$INPUT_CONTAINER_PORT mariadb:$INPUT_MARIADB_VERSION --port=$INPUT_CONTAINER_PORT"
+docker_run="$docker_run -d -p $INPUT_HOST_PORT:$INPUT_CONTAINER_PORT $INPUT_MARIADB_IMAGE:$INPUT_MARIADB_VERSION --port=$INPUT_CONTAINER_PORT"
 docker_run="$docker_run --character-set-server=$INPUT_CHARACTER_SET_SERVER --collation-server=$INPUT_COLLATION_SERVER"
 
 CONTAINER_NAME=$(eval "$docker_run" )
