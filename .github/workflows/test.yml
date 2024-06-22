@@ -9,6 +9,8 @@ jobs:
     strategy:
       matrix:
         node-version: ['10.x']
+        mariadb-version:
+          - 10.4.10
 
     steps:
     - uses: actions/checkout@v1
@@ -21,7 +23,7 @@ jobs:
     - name: Set up MariaDB 10
       uses: ./
       with:
-        mariadb version: 10.4.10
+        mariadb version: ${{ matrix.mariadb-version }}
         mysql database: test
         mysql root password: ${{ secrets.DatabasePassword }}
     - name: npm install, build, and test
