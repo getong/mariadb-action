@@ -17,6 +17,7 @@ jobs:
           - 10.4.10
           - 10.6
           - 11.4
+          - "latest"
 
     steps:
     - uses: actions/checkout@v1
