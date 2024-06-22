@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Set up MariaDB 10
-      uses: getong/mariadb-action@v1.10
+      uses: ./
       with:
         mariadb version: 10.4.10
         mysql database: test
