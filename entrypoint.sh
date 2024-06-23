@@ -18,7 +18,7 @@ elif [ -n "$INPUT_MYSQL_USER" ]; then
 else
   echo "Using empty password for root"
 
-  docker_run+=(-e MYSQL_ALLOW_EMPTY_PASSWORD=true )
+  docker_run+=( -e MYSQL_ALLOW_EMPTY_PASSWORD=true )
 fi
 
 if [ -n "$INPUT_MYSQL_DATABASE" ]; then
@@ -32,11 +32,11 @@ docker_run+=( --health-cmd='healthcheck.sh --connect --innodb_initialized' --hea
 docker_run+=( -d -p "$INPUT_HOST_PORT:$INPUT_CONTAINER_PORT" "$INPUT_MARIADB_IMAGE:$INPUT_MARIADB_VERSION" --port="$INPUT_CONTAINER_PORT" )
 docker_run+=( --character-set-server="$INPUT_CHARACTER_SET_SERVER" --collation-server="$INPUT_COLLATION_SERVER" )
 
-CONTAINER_NAME=$( "${docker_run[@]}" )
+CONTAINER_NAME=$(eval "${docker_run[@]}" )
 
 if [ -z "$CONTAINER_NAME" ]; then
-	echo "No container started"
-	exit 1
+  echo "No container started"
+  exit 1
 fi
 
 echo "Waiting for container $CONTAINER_NAME to start..."

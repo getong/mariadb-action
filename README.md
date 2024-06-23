@@ -8,7 +8,7 @@ It is based on the Docker container and is limited by Github Actions, which cont
 
 ```yaml
 steps:
-- uses: getong/mariadb-action@v1.11
+- uses: getong/mariadb-action@v1.12
   with:
     host port: 3800 # Optional, default value is 3306. The port of host
     container port: 3307 # Optional, default value is 3306. The port of container
@@ -49,9 +49,9 @@ jobs:
     - name: Shutdown Ubuntu MySQL (SUDO)
       run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
 
-    - # ... some steps before set-up MySQL ...
+    - # ... some steps before set-up MariaDB ...
     - name: Set up MariaDB
-      uses: getong/mariadb-action@v1.11
+      uses: getong/mariadb-action@v1.12
       with:
         # ... Set-up MariaDB configuration, see Usage
 
